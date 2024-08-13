@@ -1,0 +1,3 @@
+rootProject.name = 'registration'
+include('registration-service')
+include('verification-service')

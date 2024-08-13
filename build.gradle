@@ -1,0 +1,44 @@
+buildscript {
+    ext {
+        springBootVersion = '2.7.18'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+
+    repositories {
+        mavenCentral()
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+    ext {
+        testcontainersVersion = "1.18.3"
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.testcontainers:testcontainers-bom:$testcontainersVersion"
+        }
+    }
+}
+
+
+tasks.register('runAll') {
+    dependsOn ':registration-service:bootRun'
+    dependsOn ':verification-service:bootRun'
+}

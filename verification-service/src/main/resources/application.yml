@@ -1,0 +1,12 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:29092
+    topic:
+      registration: registration-topic
+      verification: verification-topic
+    consumer:
+      group-id: verification
+
+
+server:
+  port: 8081
