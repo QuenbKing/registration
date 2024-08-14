@@ -27,7 +27,7 @@ public class RegistrationService {
         if (userRepository.existsByEmail(userRequest.getEmail())) {
             throw new RegistrationException("A user with such an email has already been registered");
         } else if (userRepository.existsByLogin(userRequest.getLogin())){
-            throw new RegistrationException("A user with such an email has already been registered");
+            throw new RegistrationException("A user with such a login has already been registered");
         }
 
         String encodePassword = passwordEncoder.encode(userRequest.getPassword());

@@ -43,7 +43,20 @@ public class RegistrationServiceTest {
         request.setFullname("User Name");
 
         User user = new User();
+        user.setId(1L);
+        user.setLogin("user1");
+        user.setPassword("password1");
+        user.setEmail("user@example.com");
+        user.setFullname("User Name");
+
         UserOutbox userOutbox = new UserOutbox();
+        userOutbox.setId(1L);
+        userOutbox.setUserId(user.getId());
+        userOutbox.setLogin("user1");
+        userOutbox.setPassword("password1");
+        userOutbox.setEmail("user@example.com");
+        userOutbox.setFullname("User Name");
+
 
         when(passwordEncoder.encode("password1")).thenReturn("encodedPassword");
         when(userMapper.toUser(request)).thenReturn(user);

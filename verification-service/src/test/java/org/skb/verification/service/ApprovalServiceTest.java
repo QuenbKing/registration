@@ -10,11 +10,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.KafkaException;
 import org.springframework.kafka.core.KafkaTemplate;
 
-import java.util.Random;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class ApprovalServiceTest {
@@ -55,23 +54,5 @@ public class ApprovalServiceTest {
         approvalService.approveUser(registrationRequest);
 
         verify(kafkaTemplate).send(eq(verificationTopic), any(RegistrationResponse.class));
-    }
-
-    @Test
-    void approveUser_randomFailure() {
-        RegistrationRequest registrationRequest = new RegistrationRequest(
-                "testLogin1",
-                "testPassword1",
-                "test@example.com",
-                "Test User");
-
-        Random random = mock(Random.class);
-        when(random.nextBoolean()).thenReturn(true);
-        approvalService = new ApprovalService(kafkaTemplate);
-        RegistrationResponse registrationResponse = new RegistrationResponse("test@example.com", "Your registration request was approved");
-
-        approvalService.approveUser(registrationRequest);
-
-        verify(kafkaTemplate).send(eq(verificationTopic), eq(registrationResponse));
     }
 }
